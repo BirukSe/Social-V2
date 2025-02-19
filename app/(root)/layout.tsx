@@ -1,14 +1,29 @@
 import Navbar from '@/components/Navbar';
-import React, { ReactNode } from 'react'
+import Profile from '@/components/Profile';
+import Sidebar from '@/components/Sidebar';
+import React, { ReactNode } from 'react';
 
-const layout = ({children}: {children: ReactNode}) => {
+const Layout = ({ children }: { children: ReactNode }) => {
+  const createPopUp=async()=>{
+
+  }
   return (
-    <div className="flex">
-        <Navbar/>
-        {children}
-      
-    </div>
-  )
-}
+    <>
+      <div className="flex">
+        <Navbar />
+        
+        {/* Sidebar positioned at the top right */}
+        <div className="flex gap-3 absolute top-3 right-7">
+          
+          
+          <Sidebar />
+        </div>
 
-export default layout;
+        {/* Main Content */}
+        <div className="w-full">{children}</div>
+      </div>
+    </>
+  );
+};
+
+export default Layout;

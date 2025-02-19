@@ -11,7 +11,10 @@ export default {
   	extend: {
   		colors: {
 			dark: {
-				1: '#020617'
+				1: '#020617',
+				2: '#000000',
+				3: '#131315',
+				4: '#1d1d1f'
 
 			},
 			blue: {
@@ -20,7 +23,8 @@ export default {
 			life: {
 				1: '#fdba74',
 				2: '#9a3412',
-				3: '#fe9567'
+				3: '#fe9567',
+				4: '#4338ca'
 			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
