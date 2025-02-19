@@ -6,12 +6,12 @@ const page = () => {
   
  
   return (
-    <div className="mt-7">
+    <div className="mt-7 w-full">
       <h1 className="font-bold text-2xl flex justify-center text-white ">Home Feed</h1>
-      <div className="flex justify-center">
-      <Feed/>
+      <div className="flex justify-center w-full">
+  <Feed />
+</div>
 
-      </div>
       
      
      

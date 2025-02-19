@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Profile from '@/components/Profile';
 import Sidebar from '@/components/Sidebar';
 import React, { ReactNode } from 'react';
+import { Toaster } from "@/components/ui/toaster"
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const createPopUp=async()=>{
@@ -20,7 +21,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
         </div>
 
         {/* Main Content */}
-        <div className="w-full">{children}</div>
+        <div className="w-full">
+         <main>{children}</main> 
+          <Toaster />
+
+        </div>
       </div>
     </>
   );
