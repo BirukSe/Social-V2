@@ -16,39 +16,14 @@ import { useUserStore } from '@/lib/store';
 
 const Profile = ({ desc }: { desc: string }) => {
     const router = useRouter();
-    const { user, setUser } = useUserStore();
+    const { user,fetchData} = useUserStore();
     const [isLoading, setIsLoading] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false); // ✅ State for dialog
 
-    useEffect(() => {
-        setIsLoading(true);
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/api/verify', {
-                    method: 'GET',
-                    credentials: 'include', // Include cookies
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+   useEffect(()=>{
+    fetchData();
 
-                if (!response.ok) {
-                    throw new Error("Unauthorized");
-                }
-
-                const data = await response.json();
-                setUser(data.user); // Assuming your API returns { user: {name, email, etc.} }
-
-            } catch (error) {
-                console.log("Error fetching profile:", error);
-                router.push('/'); // Redirect if unauthorized
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData(); // Call the function
-    }, [router]);
+   },[])
 
     console.log("myuser is", user);
 

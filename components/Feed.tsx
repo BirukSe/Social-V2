@@ -5,16 +5,21 @@ import { useToast } from "@/hooks/use-toast";
 import axiosInstance from '@/lib/axios';
 import { useUserStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const Feed = () => {
+    const router=useRouter();
     const { toast } = useToast();
     const [data, setData] = useState([]);
-    const { user } = useUserStore();
+    const { user, fetchData } = useUserStore();
     const [isLoading, setIsLoading] = useState(false);
     const [hearts, setHearts] = useState<{ [key: string]: boolean }>({});
+    const [saves, setSaves] = useState<{ [key: string]: boolean }>({});
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchDataa = async () => {
+            console.log("total user", user?.id)
+            await fetchData();
             setIsLoading(true);
             try {
                 const response = await fetch('http://localhost:3000/api/new-post', {
@@ -23,6 +28,10 @@ const Feed = () => {
                         'Content-Type': 'application/json'
                     },
                 });
+                // if(!user || user==undefined || user==null){
+                //     router.push('/');
+
+                // }
                 const result = await response.json();
                 if (!result) {
                     throw new Error("No response from server");
@@ -35,13 +44,13 @@ const Feed = () => {
             }
         }
 
-        fetchData();
+        fetchDataa();
 
     }, []);
 
     const checkState = async (postId: any) => {
         try {
-            const response = await fetch('http://localhost:3000/api/state', {
+            const response = await fetch('http://localhost:3000/api/state/1', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -55,6 +64,26 @@ const Feed = () => {
             console.log("my result is", result);
             return result?.heart;
         } catch (error) {
+            console.log(error);
+        }
+    }
+    const checkSaved=async(postId:any)=>{
+        try{
+            const response=await fetch('http://localhost:3000/api/saved',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({user_id: user?.id, post_id: postId})
+            })
+            const result = await response.json();
+            if (!result) {
+                toast({ title: "Error connecting with server..." });
+            }
+            console.log("my result is", result);
+            return result?.save;
+
+        }catch(error){
             console.log(error);
         }
     }
@@ -82,6 +111,27 @@ const Feed = () => {
             console.log(error);
         }
     }
+    const handleSave=async (postId:any)=>{
+        try{
+            const response=await fetch('http://localhost:3000/api/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({user_id: user?.id, post_id: postId})
+            })
+            const result=await response.json();
+            if(!result){
+                toast({title: "Error connecting with server"})
+            }
+            toast({
+                title: "Post saved, feel free to share the post to your friends",
+            });
+
+        }catch(error){
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         // Check the initial state for all posts
@@ -91,6 +141,11 @@ const Feed = () => {
                 ...prevState,
                 [post?.id]: heartStatus
             }));
+            const saveStatus=await checkSaved(post?.id);
+            setSaves(prevState=>({
+                ...prevState,
+                [post?.id]: saveStatus
+            }))
         });
     }, [data]);
 
@@ -127,7 +182,7 @@ const Feed = () => {
                                     className="backdrop-filter-none inverted w-10 h-10 bg-cover"
                                     onClick={() => handleLike(post?.id)} 
                                 />
-                                <img src="save.png" className="w-10 h-10 invert" />
+                                <img src={saves[post?.id]?"saved.png":"save.png"} className="w-10 h-10 invert" onClick={()=>handleSave(post?.id)}/>
                             </div>
                         </div>
                     ))}
