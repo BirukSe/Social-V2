@@ -120,10 +120,11 @@ const Feed = () => {
                             <div>
                                 <img src={post?.image_url} className="max-h-[300px] w-[400px]" />
                             </div>
-                            <div className="flex justify-between mt-3">
+                            <div className="flex justify-between mt-3 inverted">
                                 <img 
-                                    src={hearts[post?.id] ? "hearted.png" : "heart.png"} 
-                                    className={cn('w-10 h-10 inverted', { 'inverted': !hearts[post?.id] })}
+                                    src={hearts[post?.id] ? "hearted.png" : "hearttt.png"} 
+                                    // className={cn('w-10 h-10 inverted')}
+                                    className="backdrop-filter-none inverted w-10 h-10 bg-cover"
                                     onClick={() => handleLike(post?.id)} 
                                 />
                                 <img src="save.png" className="w-10 h-10 invert" />
