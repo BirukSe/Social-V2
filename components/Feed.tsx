@@ -104,13 +104,21 @@ const Feed = () => {
                 });
                 throw new Error("No response from server");
             }
+    
+            // Optimistically update the UI
+            setHearts(prevState => ({
+                ...prevState,
+                [postId]: result.success  // Set liked state to true
+            }));
+    
             toast({
-                title: "Post liked, feel free to share the post to your friends",
+                title: "Post liked, feel free to share the post with your friends",
             });
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+    
     const handleSave=async (postId:any)=>{
         try{
             const response=await fetch('http://localhost:3000/api/save', {
@@ -179,10 +187,10 @@ const Feed = () => {
                                 <img 
                                     src={hearts[post?.id] ? "hearted.png" : "hearttt.png"} 
                                     // className={cn('w-10 h-10 inverted')}
-                                    className="backdrop-filter-none inverted w-10 h-10 bg-cover"
+                                    className="backdrop-filter-none inverted w-10 h-10 bg-cover cursor-pointer"
                                     onClick={() => handleLike(post?.id)} 
                                 />
-                                <img src={saves[post?.id]?"saved.png":"save.png"} className="w-10 h-10 invert" onClick={()=>handleSave(post?.id)}/>
+                                <img src={saves[post?.id]?"saved.png":"save.png"} className="w-10 h-10 invert cursor-pointer" onClick={()=>handleSave(post?.id)}/>
                             </div>
                         </div>
                     ))}

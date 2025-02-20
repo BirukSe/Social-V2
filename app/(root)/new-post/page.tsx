@@ -89,14 +89,23 @@ const Page = () => {
               {isDragActive ? (
                 <p>Drop the files here ...</p>
               ) : (
-                <p>Drag 'n' drop some files here, or click to select files</p>
+                <>
+                
+                <div className={!imagePreview?"flex flex-col items-center justify-center border-2 border-slate-300 rounded-lg p-3":"hidden"}>
+                  <img src="file-upload.svg" className="flex justify-center w-20 h-20"/>
+                  <p className="text-[15px]">Drag and drop file here to upload image</p>
+                  <Button>Upload File</Button>
+
+                  </div>
+                   {imagePreview && (
+                    <div className="mt-3">
+                      <img src={imagePreview} alt="Preview" className="max-w-[40%] h-auto flex justify-center" />
+                    </div>
+                  )}
+                  </>
               )}
             </div>
-            {imagePreview && (
-              <div className="mt-3">
-                <img src={imagePreview} alt="Preview" className="max-w-[25%] h-auto" />
-              </div>
-            )}
+           
           </div>
         </div>
 

@@ -15,6 +15,10 @@ export const POST=async(req:Request)=>{
       WHERE user_id = ${user_id} AND post_id = ${post_id}
             
             `;
+            return NextResponse.json({
+                success: false,
+               
+              });
 
         }
         else{
@@ -23,11 +27,12 @@ export const POST=async(req:Request)=>{
       VALUES (${user_id}, ${post_id})
             
             `;
+            return NextResponse.json({
+                success: true,
+               
+              });
         }
-        return NextResponse.json({
-            success: true,
-           
-          });
+       
 
 
     }catch(error){
