@@ -6,6 +6,7 @@ import axiosInstance from '@/lib/axios';
 import { useUserStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { Check } from 'lucide-react';
 
 const Feed = () => {
     const router=useRouter();
@@ -161,8 +162,11 @@ const Feed = () => {
         <>
             {isLoading && <Loader />}
 
-            <div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-14 mt-14 p-7 max-w-[5000px] w-full">
+            <div className="w-full">
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-14 mt-14 p-7 max-w-[5000px] w-full"> */}
+                <div className="grid grid-cols-1 gap-14 mt-14 p-7 w-full max-w-screen-xl mx-auto ">
+
+
                     {data.map((post) => (
                         <div key={post?.id} className="shadow-lg border-2 border-slate-400 rounded-xl p-7 w-full">
                             <div className="flex gap-2">
@@ -180,8 +184,8 @@ const Feed = () => {
                                 <p className="text-white">{post?.location}</p>
                             </div>
                             <h1 className="text-white font-bold">{post?.caption}</h1>
-                            <div>
-                                <img src={post?.image_url} className="max-h-[300px] w-[400px]" />
+                            <div className="flex justify-center">
+                                <img src={post?.image_url} className="max-h-[300px] w-[700px]" />
                             </div>
                             <div className="flex justify-between mt-3 inverted">
                                 <img 
@@ -190,7 +194,7 @@ const Feed = () => {
                                     className="backdrop-filter-none inverted w-10 h-10 bg-cover cursor-pointer"
                                     onClick={() => handleLike(post?.id)} 
                                 />
-                                <img src={saves[post?.id]?"saved.png":"save.png"} className="w-10 h-10 invert cursor-pointer" onClick={()=>handleSave(post?.id)}/>
+                                <img src={saves[post?.id]?"check.png":"save.png"} className="w-10 h-10 invert cursor-pointer" onClick={()=>handleSave(post?.id)}/>
                             </div>
                         </div>
                     ))}

@@ -1,5 +1,6 @@
 "use client";
 import Loader from "@/app/_components/Loader";
+import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useUserStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
@@ -47,7 +48,44 @@ const Page = () => {
     } else {
       fetchData();
     }
-  }, [user, fetchData]); // Depend on `user` so that fetch runs when user data is available
+  }, [user, fetchData]); 
+  const handleDownload = async (url:string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+  
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "downloaded-image.jpg"; // Set desired filename
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      // Clean up the object URL
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }
+  };
+  const handleShare = (url:string) => {
+    const urlToShare = url; // Replace with your actual link
+  
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Check this out!",
+          text: "Hey, take a look at this amazing content!",
+          url: urlToShare,
+        })
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.error("Error sharing:", error));
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      navigator.clipboard.writeText(urlToShare);
+      alert("Link copied to clipboard!");
+    }
+  };
 
   return (
     <>
@@ -62,8 +100,14 @@ const Page = () => {
                 <img
                   src={save?.image_url}
                   alt="Saved Post"
-                  className="w-full h-40 object-cover rounded-md"
+                  className="w-full h-100 object-cover rounded-md"
                 />
+                <div className="flex mt-3 justify-between">
+                <Button className="bg-red-500" onClick={()=>handleDownload(save?.image_url)}>Download</Button>
+                <Button className="bg-green-500" onClick={()=>handleShare(save?.image_url)}>Share</Button>
+                  </div>
+                
+
               </div>
             ))
           ) : (
