@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 import Loader from '@/app/_components/Loader';
 import React, { useEffect, useState } from 'react';

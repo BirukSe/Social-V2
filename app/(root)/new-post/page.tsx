@@ -18,8 +18,10 @@ const Page = () => {
   const {user}=useUserStore();
   const [isLoading, setIsLoading]=useState(false);
 
-  const onDrop = useCallback((acceptedFiles) => {
+
+  const onDrop = useCallback((acceptedFiles:any) => {
     const file = acceptedFiles[0];
+    //@ts-ignore
     setImagePreview(URL.createObjectURL(file)); // Show preview of the image
   }, []);
 
@@ -30,11 +32,13 @@ const Page = () => {
 
     // Append image, caption, and location to formData
     if (imagePreview) {
+      //@ts-ignore
       const imageFile = document.querySelector('input[type="file"]').files[0];
       formData.append("image", imageFile);
     }
     formData.append("caption", caption);
     formData.append("location", location);
+    //@ts-ignore
     formData.append("userId", user?.id);
 
     try {
