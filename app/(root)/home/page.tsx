@@ -86,6 +86,7 @@ const Page = () => {
         {/* Featured Carousel */}
         <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
           {mounted && (
+            //@ts-ignore
             <Carousel
               autoPlay
               infiniteLoop
