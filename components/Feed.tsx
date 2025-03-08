@@ -24,7 +24,7 @@ const Feed = () => {
             await fetchData();
             setIsLoading(true);
             try {
-                const response = await fetch('http://localhost:3000/api/new-post', {
+                const response = await fetch('/api/new-post', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ const Feed = () => {
 
     const checkState = async (postId: any) => {
         try {
-            const response = await fetch('http://localhost:3000/api/state/1', {
+            const response = await fetch('/api/state/1', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ const Feed = () => {
     }
     const checkSaved=async(postId:any)=>{
         try{
-            const response=await fetch('http://localhost:3000/api/saved',{
+            const response=await fetch('/api/saved',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ const Feed = () => {
 
     const handleLike = async (postId: any) => {
         try {
-            const response = await fetch('http://localhost:3000/api/like', {
+            const response = await fetch('/api/like', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ const Feed = () => {
     
     const handleSave=async (postId:any)=>{
         try{
-            const response=await fetch('http://localhost:3000/api/save', {
+            const response=await fetch('/api/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

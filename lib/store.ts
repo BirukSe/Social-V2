@@ -21,7 +21,7 @@ export const useUserStore = create<UserState>()(
 
       fetchData: async () => {
         try {
-          const response = await fetch("http://localhost:3000/api/verify", {
+          const response = await fetch("/api/verify", {
             method: "GET",
             credentials: "include",
             headers: { "Content-Type": "application/json" },

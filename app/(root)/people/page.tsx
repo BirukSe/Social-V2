@@ -21,7 +21,7 @@ const Page = () => {
 
       try {
         //@ts-ignore
-        const response = await fetch(`http://localhost:3000/api/state/${user?.id}`, {
+        const response = await fetch(`/api/state/${user?.id}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });

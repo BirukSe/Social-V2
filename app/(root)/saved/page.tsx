@@ -23,7 +23,7 @@ const Page = () => {
       if (!user?.id) return; // Ensure user ID exists before fetching
 
       try {
-        const response = await fetch(`http://localhost:3000/api/allsave/${user.id}`, {
+        const response = await fetch(`/api/allsave/${user.id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
